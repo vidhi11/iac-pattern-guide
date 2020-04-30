@@ -26,7 +26,7 @@ resource "ibm_is_instance" "iac_test_instance" {
   user_data = <<-EOUD
               #!/bin/bash
               echo "Hello World" > index.html
-              nohup busybox httpd -f -p 8080 &
+              nohup busybox httpd -f -p ${var.port} &
               EOUD
 
   tags = [ "iac-terraform-test" ]

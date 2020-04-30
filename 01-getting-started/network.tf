@@ -23,8 +23,8 @@ resource "ibm_is_security_group_rule" "iac_test_security_group_rule_tcp_http" {
   group = ibm_is_security_group.iac_test_security_group.id
   direction = "inbound"
   tcp {
-      port_min = 8080
-      port_max = 8080
+      port_min = var.port
+      port_max = var.port
   }
 }
 
