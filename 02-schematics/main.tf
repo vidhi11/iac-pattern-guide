@@ -4,12 +4,12 @@ provider "ibm" {
 }
 
 resource "ibm_is_ssh_key" "iac_test_key" {
-  name       = "terraform-test-key"
+  name       = "${var.project_name}-${var.environment}-key"
   public_key = var.public_key
 }
 
 resource "ibm_is_instance" "iac_test_instance" {
-  name    = "terraform-test-instance"
+  name    = "${var.project_name}-${var.environment}-instance"
   image   = "r006-14140f94-fcc4-11e9-96e7-a72723715315"
   profile = "cx2-2x4"
 
@@ -29,5 +29,5 @@ resource "ibm_is_instance" "iac_test_instance" {
               nohup busybox httpd -f -p ${var.port} &
               EOUD
 
-  tags = [ "iac-terraform-test" ]
+  tags = [ "iac-${var.project_name}-${var.environment}" ]
 }
