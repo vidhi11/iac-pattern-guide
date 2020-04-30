@@ -4,7 +4,7 @@
 // }
 
 variable "public_key" { }
-variable "ssh_key_name" { default = "schematics-test-key" }
+// variable "ssh_key_name" { default = "schematics-test-key" }
 
 variable "port" {
   default = 8080

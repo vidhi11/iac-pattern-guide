@@ -4,11 +4,8 @@ provider "ibm" {
 }
 
 resource "ibm_is_ssh_key" "iac_test_key" {
-  name       = var.ssh_key_name
+  name       = "terraform-test-key"
   public_key = var.public_key
-}
-data "ibm_is_ssh_key" "iac_test_key" {
-  name = var.ssh_key_name
 }
 
 resource "ibm_is_instance" "iac_test_instance" {
@@ -24,7 +21,7 @@ resource "ibm_is_instance" "iac_test_instance" {
 
   vpc  = ibm_is_vpc.iac_test_vpc.id
   zone = "us-south-1"
-  keys = [ data.ibm_is_ssh_key.iac_test_key.id ]
+  keys = [ ibm_is_ssh_key.iac_test_key.id ]
 
   user_data = <<-EOUD
               #!/bin/bash
