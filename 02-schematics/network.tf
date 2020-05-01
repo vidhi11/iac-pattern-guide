@@ -11,29 +11,29 @@ resource "ibm_is_subnet" "iac_test_subnet" {
 
 resource "ibm_is_security_group" "iac_test_security_group" {
   name = "${var.project_name}-${var.environment}-sg-public"
-  vpc = ibm_is_vpc.iac_test_vpc.id
+  vpc  = ibm_is_vpc.iac_test_vpc.id
 }
 
 resource "ibm_is_security_group_rule" "iac_test_security_group_rule_all_outbound" {
-  group = ibm_is_security_group.iac_test_security_group.id
+  group     = ibm_is_security_group.iac_test_security_group.id
   direction = "outbound"
 }
 
 resource "ibm_is_security_group_rule" "iac_test_security_group_rule_tcp_http" {
-  group = ibm_is_security_group.iac_test_security_group.id
+  group     = ibm_is_security_group.iac_test_security_group.id
   direction = "inbound"
   tcp {
-      port_min = var.port
-      port_max = var.port
+    port_min = var.port
+    port_max = var.port
   }
 }
 
 resource "ibm_is_security_group_rule" "iac_test_security_group_rule_tcp_ssh" {
-  group = ibm_is_security_group.iac_test_security_group.id
+  group     = ibm_is_security_group.iac_test_security_group.id
   direction = "inbound"
   tcp {
-      port_min = 22
-      port_max = 22
+    port_min = 22
+    port_max = 22
   }
 }
 
