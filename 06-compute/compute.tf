@@ -7,10 +7,15 @@ data "local_file" "db" {
   filename = "${path.module}/db.min.json"
 }
 
+data "ibm_is_image" "ds_iac_app_image" {
+  name = "ibm-ubuntu-18-04-1-minimal-amd64-1"
+}
+
 resource "ibm_is_instance" "iac_app_instance" {
-  name    = "${var.project_name}-${var.environment}-instance"
-  image   = "r006-14140f94-fcc4-11e9-96e7-a72723715315"
+  name    = "${var.project_name}-${var.environment}-instance-${format("%02s", count.index)}"
+  image   = data.ibm_is_image.ds_iac_app_image.id
   profile = "cx2-2x4"
+  count   = var.max_size
 
   primary_network_interface {
     name            = "eth1"

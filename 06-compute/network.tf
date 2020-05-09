@@ -38,6 +38,7 @@ resource "ibm_is_security_group_rule" "iac_app_security_group_rule_tcp_ssh" {
 }
 
 resource "ibm_is_floating_ip" "iac_app_floating_ip" {
-  name   = "${var.project_name}-${var.environment}-ip"
-  target = ibm_is_instance.iac_app_instance.primary_network_interface.0.id
+  name   = "${var.project_name}-${var.environment}-ip-${format("%02s", count.index)}"
+  target = ibm_is_instance.iac_app_instance[count.index].primary_network_interface.0.id
+  count  = var.max_size
 }
