@@ -23,9 +23,10 @@ resource "ibm_is_instance" "iac_app_instance" {
     security_groups = [ibm_is_security_group.iac_app_security_group.id]
   }
 
-  vpc  = ibm_is_vpc.iac_app_vpc.id
-  zone = "us-south-1"
-  keys = [ibm_is_ssh_key.iac_app_key.id]
+  vpc     = ibm_is_vpc.iac_app_vpc.id
+  zone    = "us-south-1"
+  keys    = [ibm_is_ssh_key.iac_app_key.id]
+  volumes = [ibm_is_volume.iac_app_volume.id]
 
   user_data = <<-EOUD
             #!/bin/bash
