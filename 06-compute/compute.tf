@@ -12,10 +12,10 @@ data "ibm_is_image" "ds_iac_app_image" {
 }
 
 resource "ibm_is_instance" "iac_app_instance" {
+  count   = var.max_size
   name    = "${var.project_name}-${var.environment}-instance-${format("%02s", count.index)}"
   image   = data.ibm_is_image.ds_iac_app_image.id
   profile = "cx2-2x4"
-  count   = var.max_size
 
   primary_network_interface {
     name            = "eth1"
@@ -26,7 +26,7 @@ resource "ibm_is_instance" "iac_app_instance" {
   vpc     = ibm_is_vpc.iac_app_vpc.id
   zone    = "us-south-1"
   keys    = [ibm_is_ssh_key.iac_app_key.id]
-  volumes = [ibm_is_volume.iac_app_volume.id]
+  volumes = [ibm_is_volume.iac_app_volume[count.index].id]
 
   user_data = <<-EOUD
             #!/bin/bash
