@@ -1,2 +1,4 @@
-project_name = "iac_schematics_test"
+project_name = ""
 environment  = "dev"
+public_key = ""
+ibmcloud_api_key=""

@@ -1,10 +1,18 @@
 provider "ibm" {
-  generation = 2
+  ibmcloud_api_key = var.ibmcloud_api_key
   region     = "us-south"
 }
-
-data "ibm_is_ssh_key" "iac_test_key" {
-  name       = var.public_key
+terraform {
+  required_providers {
+    ibm = {
+      source = "IBM-Cloud/ibm"
+      version = "~> 1.32.1"
+    }
+    template = {
+      source = "hashicorp/template"
+      version = ">= 2.2.0"
+    }
+  }
 }
 
 resource "ibm_is_instance" "iac_test_instance" {
@@ -20,7 +28,7 @@ resource "ibm_is_instance" "iac_test_instance" {
 
   vpc  = ibm_is_vpc.iac_test_vpc.id
   zone = "us-south-1"
-  keys = [data.ibm_is_ssh_key.iac_test_key.id]
+  keys = [var.public_key]
 
   user_data = <<-EOUD
               #!/bin/bash
