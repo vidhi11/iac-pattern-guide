@@ -3,9 +3,8 @@ provider "ibm" {
   region     = "us-south"
 }
 
-resource "ibm_is_ssh_key" "iac_test_key" {
-  name       = "${var.project_name}-${var.environment}-key"
-  public_key = var.public_key
+data "ibm_is_ssh_key" "iac_test_key" {
+  name       = var.public_key
 }
 
 resource "ibm_is_instance" "iac_test_instance" {
@@ -21,7 +20,7 @@ resource "ibm_is_instance" "iac_test_instance" {
 
   vpc  = ibm_is_vpc.iac_test_vpc.id
   zone = "us-south-1"
-  keys = [ibm_is_ssh_key.iac_test_key.id]
+  keys = [data.ibm_is_ssh_key.iac_test_key.id]
 
   user_data = <<-EOUD
               #!/bin/bash
