@@ -37,7 +37,7 @@ resource "ibm_is_security_group_rule" "iac_test_security_group_rule_tcp_ssh" {
   }
 }
 
-resource "ibm_is_floating_ip" "iac_test_floating_ip" {
-  name   = "${var.project_name}-${var.environment}-ip"
-  target = ibm_is_instance.iac_test_instance.primary_network_interface.0.id
-}
+# resource "ibm_is_floating_ip" "iac_test_floating_ip" {
+#   name   = "${var.project_name}-${var.environment}-ip"
+#   target = ibm_is_instance.iac_test_instance.primary_network_interface.0.id
+# }
